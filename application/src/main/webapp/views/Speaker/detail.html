@@ -1,0 +1,49 @@
+<header ng-switch on="$location.path().indexOf('/Speakers/new') > -1">
+    <h3 ng-switch-when="true">Create a new Speaker</h3>
+    <h3 ng-switch-when="false">View or edit Speaker</h3>
+</header>
+<form id="SpeakerForm" name="SpeakerForm" class="form-horizontal" role="form">
+    <div ng-show="displayError" class="alert alert-danger">
+        <strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+    </div>
+    
+
+    <div class="form-group" ng-class="{'has-error': SpeakerForm.bio.$invalid}">
+        <label for="bio" class="col-sm-2 control-label">Bio</label>
+        <div id="bioControls" class="col-sm-10">
+            <input id="bio" name="bio" type="text" class="form-control" ng-model="speaker.bio" placeholder="Enter the Speaker Bio"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': SpeakerForm.name.$invalid}">
+        <label for="name" class="col-sm-2 control-label">Name</label>
+        <div id="nameControls" class="col-sm-10">
+            <input id="name" name="name" type="text" class="form-control" ng-model="speaker.name" placeholder="Enter the Speaker Name"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': SpeakerForm.twitterhandle.$invalid}">
+        <label for="twitterhandle" class="col-sm-2 control-label">Twitterhandle</label>
+        <div id="twitterhandleControls" class="col-sm-10">
+            <input id="twitterhandle" name="twitterhandle" type="text" class="form-control" ng-model="speaker.twitterhandle" placeholder="Enter the Speaker Twitterhandle"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': SpeakerForm.sessions.$invalid}">
+        <label for="sessions" class="col-sm-2 control-label">Sessions</label>
+        <div id="sessionsControls" class="col-sm-10">
+            <select id="sessions" name="sessions" multiple class="form-control" ng-model="sessionsSelection" ng-options="s.text for s in sessionsSelectionList">
+                <option value="">Choose a Sessions</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button id="saveSpeaker" name="saveSpeaker" class="btn btn-primary" ng-disabled="isClean() || SpeakerForm.$invalid" ng-click="save()"><span class="glyphicon glyphicon-ok-sign"></span> Save</button>
+            <button id="cancel" name="cancel" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</button>
+            <button id="deleteSpeaker" name="deleteSpeaker" class="btn btn-danger" ng-show="speaker.id" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+    </div>
+</form>

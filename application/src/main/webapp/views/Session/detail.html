@@ -1,0 +1,76 @@
+<header ng-switch on="$location.path().indexOf('/Sessions/new') > -1">
+    <h3 ng-switch-when="true">Create a new Session</h3>
+    <h3 ng-switch-when="false">View or edit Session</h3>
+</header>
+<form id="SessionForm" name="SessionForm" class="form-horizontal" role="form">
+    <div ng-show="displayError" class="alert alert-danger">
+        <strong>Error!</strong> Something broke. Retry, or cancel and start afresh.
+    </div>
+    
+
+    <div class="form-group" ng-class="{'has-error': SessionForm.conference.$invalid}">
+        <label for="conference" class="col-sm-2 control-label">Conference</label>
+        <div id="conferenceControls" class="col-sm-10">
+        <select id="conference" name="conference" class="form-control" ng-model="conferenceSelection" ng-options="c.text for c in conferenceSelectionList"  >
+            <option value="">Choose a Conference</option>
+        </select>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': SessionForm.description.$invalid}">
+        <label for="description" class="col-sm-2 control-label">Description</label>
+        <div id="descriptionControls" class="col-sm-10">
+            <input id="description" name="description" type="text" class="form-control" ng-model="session.description" placeholder="Enter the Session Description"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': SessionForm.endTime.$invalid}">
+        <label for="endTime" class="col-sm-2 control-label">End Time</label>
+        <div id="endTimeControls" class="col-sm-10">
+            <datetime id="endTime" name="endTime" ng-model="session.endTime" placeholder="Enter the Session End Time"></datetime>
+            <span class="help-block error" ng-show="SessionForm.endTime.$error.maxlength">maximum length is 23</span>
+            <span class="help-block error" ng-show="SessionForm.endTime.$error.datetimeFormat">does not match format "yyyy-MM-dd hh:mm:ss" (e.g. 2013-12-01 22:00:00)</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': SessionForm.location.$invalid}">
+        <label for="location" class="col-sm-2 control-label">Location</label>
+        <div id="locationControls" class="col-sm-10">
+            <input id="location" name="location" type="text" class="form-control" ng-model="session.location" placeholder="Enter the Session Location"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': SessionForm.name.$invalid}">
+        <label for="name" class="col-sm-2 control-label">Name</label>
+        <div id="nameControls" class="col-sm-10">
+            <input id="name" name="name" type="text" class="form-control" ng-model="session.name" placeholder="Enter the Session Name"></input>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': SessionForm.startTime.$invalid}">
+        <label for="startTime" class="col-sm-2 control-label">Start Time</label>
+        <div id="startTimeControls" class="col-sm-10">
+            <datetime id="startTime" name="startTime" ng-model="session.startTime" placeholder="Enter the Session Start Time"></datetime>
+            <span class="help-block error" ng-show="SessionForm.startTime.$error.maxlength">maximum length is 23</span>
+            <span class="help-block error" ng-show="SessionForm.startTime.$error.datetimeFormat">does not match format "yyyy-MM-dd hh:mm:ss" (e.g. 2013-12-01 22:00:00)</span>
+        </div>
+    </div>
+
+    <div class="form-group" ng-class="{'has-error': SessionForm.speakers.$invalid}">
+        <label for="speakers" class="col-sm-2 control-label">Speakers</label>
+        <div id="speakersControls" class="col-sm-10">
+            <select id="speakers" name="speakers" multiple class="form-control" ng-model="speakersSelection" ng-options="s.text for s in speakersSelectionList">
+                <option value="">Choose a Speakers</option>
+            </select>
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+            <button id="saveSession" name="saveSession" class="btn btn-primary" ng-disabled="isClean() || SessionForm.$invalid" ng-click="save()"><span class="glyphicon glyphicon-ok-sign"></span> Save</button>
+            <button id="cancel" name="cancel" class="btn btn-default" ng-click="cancel()"><span class="glyphicon glyphicon-remove-sign"></span> Cancel</button>
+            <button id="deleteSession" name="deleteSession" class="btn btn-danger" ng-show="session.id" ng-click="remove()"><span class="glyphicon glyphicon-trash"></span> Delete</button>
+        </div>
+    </div>
+</form>
